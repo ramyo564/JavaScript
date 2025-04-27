@@ -19,13 +19,16 @@ export default function App($app) {
             this.setState({
                 ...this.state,
                 curruntTab: name,
-                photos: await request(name),
+                photos: await request(name==="all"?'':name),
             });
         },
     });
 
     //content
-    const content = new Content();
+    const content = new Content({
+        $app,
+        initialState: [],
+    });
 
     //state
     this.setState = (newState) => {
