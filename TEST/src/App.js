@@ -8,6 +8,9 @@ export default function App($app) {
         photos: [],
 
     };
+    // console.log(this); // -> App 객체로 setState 랑 state 2개 있음
+    // console.log(this.state); // -> state 객체 -> currentTab 이랑 photos 가 있음
+
     //tab
     const tab = new TapBar({
         $app,
