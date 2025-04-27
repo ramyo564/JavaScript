@@ -1,0 +1,5 @@
+# 초기화
+npm init -y 
+
+# express 설치
+npm install express@4.18.2
