@@ -1,0 +1,8 @@
+# 초기화
+npm init -y
+
+# express 설치
+npm install express@4.19.2
+
+# 서버 시작
+node ./server/server.js
