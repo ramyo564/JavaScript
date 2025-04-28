@@ -1,13 +1,13 @@
-export default function CityList({ $app, initialState }) {
+export default function CityList({ $app, initialState, handleLoadMore }) {
     this.state = initialState;
     this.$target = document.createElement('div');
     this.$target.className = 'city-list';
-
+    this.handleLoadMore = handleLoadMore;
     $app.appendChild(this.$target);
 
     this.template = () => {
         let temp = `<div class="city-items-container">`;
-        if(this.state){
+        if (this.state) {
             this.state.cities.forEach(element => {
                 temp += `
                 <div class="city-item" id=${element.id}>
@@ -23,6 +23,16 @@ export default function CityList({ $app, initialState }) {
 
     this.render = () => {
         this.$target.innerHTML = this.template();
+        if (!this.state.isEnd) {
+            const $loadMoreButton = document.createElement('button');
+            $loadMoreButton.className = "add-items-btn";
+            $loadMoreButton.textContent = '+ 더보기';
+            this.$target.appendChild($loadMoreButton);
+
+            $loadMoreButton.addEventListener('click', () => {
+                this.handleLoadMore();
+            })
+        }
     };
 
     this.setState = (newState) => {
