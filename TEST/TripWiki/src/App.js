@@ -35,6 +35,7 @@ export default function App($app) {
             initialState: {
                 sortBy: this.state.sortBy,
                 searchWord: this.state.searchWord,
+                currentPage: this.state.currentPage,
             },
             handleSortChange: async (sortBy) => {
                 const pageUrl = `/${this.state.region}?sort=${sortBy}`;

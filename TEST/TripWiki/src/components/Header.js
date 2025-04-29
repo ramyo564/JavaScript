@@ -8,12 +8,14 @@ export default function Header({ $app, initialState, handleSortChange, handleSea
     $app.appendChild(this.$target);
 
     this.template = () => {
-        const { sortBy, searchWord } = this.state;
+        const { sortBy, searchWord, currentPage } = this.state;
         let temp = `
         <div class="title">
             <a href="/">✈️ Trip Wiki </a>
-        </div>
-        <div class="filter-search-container">
+        </div>`;
+
+        if (!currentPage.includes('/city/')) {
+            temp += `<div class="filter-search-container">
             <div class="filter">
                 <select id="sortList" class="sort-list">
                     <option value="total" ${sortBy === 'total' ? 'selected' : ''}>Total</option>
@@ -30,13 +32,15 @@ export default function Header({ $app, initialState, handleSortChange, handleSea
             </div>
         </div>
         `;
+        }
+
 
         return temp;
     };
 
     this.render = () => {
         this.$target.innerHTML = this.template();
-        
+        if (!this.state.currentPage.includes('/city/')) {
             document.getElementById('sortList')
                 .addEventListener('change', (event) => {
                     this.handleSortChange(event.target.value);
@@ -47,7 +51,8 @@ export default function Header({ $app, initialState, handleSortChange, handleSea
                     this.handleSearch($searchInput.value);
                 }
             });
-        
+        }
+
     };
 
     this.setState = (newState) => {
