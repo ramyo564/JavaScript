@@ -6,10 +6,23 @@ import CityDetail from './components/CityDetail.js';
 import { request } from './components/api.js';
 
 export default function App($app) {
+    const getSortBy = () => {
+        if (window.location.search) {
+            return window.location.search.split('sort=')[1].split('&')[0];
+        }
+        return 'total';
+    };
+
+    const getSearchWord = () => {
+        if (window.location.search && window.location.search.includes('search=')) {
+            return window.location.search.split('search=')[1];
+        }
+        return '';
+    };
     this.state = {
         startIdx: 0,
-        sortBy: '',
-        searchWord: '',
+        sortBy: getSortBy(),
+        searchWord:getSearchWord(),
         region: '',
         cities: '',
 
@@ -20,46 +33,47 @@ export default function App($app) {
         initialState: {
             sortBy: this.state.sortBy,
             searchWord: this.state.searchWord,
-            handleSortChange: async (sortBy) => {
-                const pageUrl = `/${this.state.region}?sort=${sortBy}`;
-                history.pushState(
-                    null,
-                    null,
-                    this.state.searchWord ? pageUrl + `&search=${this.state.searchWord}` : pageUrl
-                );
-                const cities = await request(
-                    0,
-                    this.state.region,
-                    sortBy, this.state.searchWord
-                );
-                this.setState({
-                    ...this.state,
-                    startIdx: 0,
-                    sortBy: sortBy,
-                    cities: cities,
-                });
+        },
+        handleSortChange: async (sortBy) => {
+            const pageUrl = `/${this.state.region}?sort=${sortBy}`;
+            history.pushState(
+                null,
+                null,
+                this.state.searchWord ? pageUrl + `&search=${this.state.searchWord}` : pageUrl
+            );
+            const cities = await request(
+                0,
+                this.state.region,
+                sortBy,
+                this.state.searchWord
+            );
+            this.setState({
+                ...this.state,
+                startIdx: 0,
+                sortBy: sortBy,
+                cities: cities,
+            });
 
-            },
-            handleSearch: async (searchWord) => {
-                history.pushState(
-                    null,
-                    null,
-                    `/${this.state.region}?sort=${this.state.sortBy}&search=${searchWord}`
-                );
-                const cities = await request(
-                    0,
-                    this.state.region,
-                    this.state.sortBy,
-                    searchWord
-                );
-                this.setState({
-                    ...this.state,
-                    startIdx: 0,
-                    searchWord: searchWord,
-                    cities: cities,
-                })
-            },
-        }
+        },
+        handleSearch: async (searchWord) => {
+            history.pushState(
+                null,
+                null,
+                `/${this.state.region}?sort=${this.state.sortBy}&search=${searchWord}`
+            );
+            const cities = await request(
+                0,
+                this.state.region,
+                this.state.sortBy,
+                searchWord
+            );
+            this.setState({
+                ...this.state,
+                startIdx: 0,
+                searchWord: searchWord,
+                cities: cities,
+            })
+        },
     });
     const regionList = new RegionList();
     const cityList = new CityList({
@@ -89,9 +103,9 @@ export default function App($app) {
     this.setState = (newState) => {
         this.state = newState;
         cityList.setState(this.state.cities);
-        header.setState({ 
-            sortBy: this.state.sortBy, 
-            searchWord: this.state.searchWord 
+        header.setState({
+            sortBy: this.state.sortBy,
+            searchWord: this.state.searchWord
         });
     };
 
