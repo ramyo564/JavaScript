@@ -3,7 +3,7 @@ import RegionList from './components/RegionList.js';
 import CityList from './components/CityList.js';
 import CityDetail from './components/CityDetail.js';
 
-import { request } from './components/api.js';
+import { request, requestCityDetail } from './components/api.js';
 
 export default function App($app) {
     const getSortBy = () => {
@@ -121,17 +121,23 @@ export default function App($app) {
                     },
                 });
             },
-            handleItemClick : (id) => {
+            handleItemClick: (id) => {
                 history.pushState(null, null, `/city/${id}`)
                 this.setState({
                     ...this.state,
-                    currentPage : `/city/${id}`,
+                    currentPage: `/city/${id}`,
                 });
             },
         });
     };
-    const renderCityDetail = () => {
-        new CityDetail();
+    const renderCityDetail = async (cityId) => {
+        try {
+            const cityDetailData = await requestCityDetail(cityId);
+            new CityDetail({ $app, initialState: cityDetailData });
+        } catch (err) {
+            console.log(err);
+        }
+
     };
 
     this.setState = (newState) => {
