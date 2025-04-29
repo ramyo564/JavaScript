@@ -127,6 +127,27 @@ export default function App($app) {
         regionList.setState(this.state.region);
     };
 
+    window.addEventListener('popstate', async () => {
+        const urlPath = window.location.pathname;
+
+        const prevRegion = urlPath.replace('/', '');
+        const prevPage = urlPath;
+        const prevSortBy = getSortBy();
+        const prevSearchWord = getSearchWord();
+        const prevStartIdx = 0;
+        const prevCities = await request(prevStartIdx, prevRegion, prevSortBy, prevSearchWord);
+
+        this.setState({
+            ...this.state,
+            startIdx: prevStartIdx,
+            sortBy: prevSortBy,
+            region: prevRegion,
+            currentPage: prevPage,
+            searchWord: prevSearchWord,
+            cities: prevCities,
+        });
+    });
+
     const init = async () => {
         const cities = await request(
             this.state.startIdx,
