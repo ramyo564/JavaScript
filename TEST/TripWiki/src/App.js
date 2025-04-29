@@ -118,9 +118,16 @@ export default function App($app) {
                     cities: {
                         cities: [...this.state.cities.cities, ...newCities.cities],
                         isEnd: newCities.isEnd,
-                    }
-                })
-            }
+                    },
+                });
+            },
+            handleItemClick : (id) => {
+                history.pushState(null, null, `/city/${id}`)
+                this.setState({
+                    ...this.state,
+                    currentPage : `/city/${id}`,
+                });
+            },
         });
     };
     const renderCityDetail = () => {
