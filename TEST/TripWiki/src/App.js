@@ -22,7 +22,7 @@ export default function App($app) {
     this.state = {
         startIdx: 0,
         sortBy: getSortBy(),
-        searchWord:getSearchWord(),
+        searchWord: getSearchWord(),
         region: '',
         cities: '',
 
@@ -75,7 +75,24 @@ export default function App($app) {
             })
         },
     });
-    const regionList = new RegionList();
+    const regionList = new RegionList({
+        $app,
+        initialState: this.state.region,
+        handleRegion: async (region) => {
+            history.pushState(null, null, `/${region}?sort=total`);
+            const cities = await request(0, region, 'total');
+            this.setState({
+                ...this.state,
+                startIdx: 0,
+                sortBy: 'total',
+                region: region,
+                cities: cities,
+                searchWord: '',
+                currentPage: `/${region}`,
+            });
+        },
+
+    });
     const cityList = new CityList({
         $app,
         initialState: this.state.cities,
@@ -107,6 +124,7 @@ export default function App($app) {
             sortBy: this.state.sortBy,
             searchWord: this.state.searchWord
         });
+        regionList.setState(this.state.region);
     };
 
     const init = async () => {
