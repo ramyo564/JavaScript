@@ -1,0 +1,18 @@
+# 초기화
+npm init
+
+# 타입스크립트 <- Node.js 내장 모듈들의 타입 정의를 타입스크팁트에게 알려줌. 
+# Node.js 코드를 작성할 때 타입스크립트가 정확하게 타입 검사를 하도록 도움
+npm i @types/node
+
+# 타입스크립트 컴파일러 (글로벌 설치)
+npm install typescript -g 
+
+# 버전 확인
+tsc -v
+
+# 타입스크립트 실행도구
+npm i -g tsx
+
+# 타입스크립트 설정
+tsc --init
