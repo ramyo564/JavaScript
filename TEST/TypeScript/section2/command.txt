@@ -1,0 +1,8 @@
+# 초기화
+npm init
+
+# 타입스크립트
+npm i @types/node
+
+# 컴파일
+tsc
