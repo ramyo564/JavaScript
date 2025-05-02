@@ -1,0 +1,8 @@
+# 패키지 초기화
+npm init
+
+# 타입스크립트 노드 패키지
+npm i @types/node
+
+# 타입스크립트 컴파일러 옵션 설정
+tsconfig.json
