@@ -1,9 +1,8 @@
-import { useContext, useState } from "react";
-import { TodoDispatchContext, useTodoDispatch } from "../App";
+import { useState } from "react";
+import { useTodoDispatch } from "../App";
 
-interface Props {}
 
-export default function Editor(props: Props) {
+export default function Editor() {
 
     const dispatch = useTodoDispatch();
     const [text, setText] = useState("");
