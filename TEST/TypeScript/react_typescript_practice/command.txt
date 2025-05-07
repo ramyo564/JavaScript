@@ -6,3 +6,5 @@ npm i @types/node @types/react @types/react-dom @types/jest
 tsconfig.json 설정
 
 jsx => tsx 변환환
+
+npm run start
