@@ -3,8 +3,8 @@ import './App.css'
 import Editor from './components/Editor';
 
 interface Todo {
-  id : number;
-  content : string;
+  id: number;
+  content: string;
 }
 
 function App() {
@@ -22,15 +22,20 @@ function App() {
     ]);
   };
 
-    useEffect(() => {
-      console.log(todos);
-    },[todos]);
+  useEffect(() => {
+    console.log(todos);
+  }, [todos]);
 
 
 
   return <div className='App'>
     <h1>Todo</h1>
-    <Editor onClickAdd={onClickAdd}/>
+    <Editor onClickAdd={onClickAdd} />
+    <div>
+      {todos.map((todo) => (
+        <div key={todo.id}> {todo.content}</div>
+      ))}
+    </div>
 
   </div>
 
