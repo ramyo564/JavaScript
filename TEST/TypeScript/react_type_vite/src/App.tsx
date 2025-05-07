@@ -1,11 +1,8 @@
 import { useState, useRef, useEffect } from 'react'
 import './App.css'
 import Editor from './components/Editor';
-
-interface Todo {
-  id: number;
-  content: string;
-}
+import type { Todo } from './types';
+import TodoItem from './components/TodoItem';
 
 function App() {
 
@@ -22,6 +19,10 @@ function App() {
     ]);
   };
 
+  const onClickDelete = (id: number) => {
+    setTodos(todos.filter((todo) => todo.id !== id) );
+  };
+
   useEffect(() => {
     console.log(todos);
   }, [todos]);
@@ -33,7 +34,7 @@ function App() {
     <Editor onClickAdd={onClickAdd} />
     <div>
       {todos.map((todo) => (
-        <div key={todo.id}> {todo.content}</div>
+        <TodoItem key={todo.id} {...todo} onClickDelete={onClickDelete} />
       ))}
     </div>
 
