@@ -58,6 +58,8 @@ let cat = {
   color: "yellow",
 } as const;
 // 모든 프로퍼티가 readonly를 갖도록 단언됨
+// 수정 불가
+// 상황에 따라 모든걸 readonly로 만들어야할 때 편리하게 사용
 
 /**
  * Non Null 단언
